@@ -1,0 +1,53 @@
+{
+  "name": "react-e-commerce",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@paypal/react-paypal-js": "^8.9.2",
+    "@reduxjs/toolkit": "^2.11.2",
+    "@stripe/react-stripe-js": "^5.6.0",
+    "@stripe/stripe-js": "^8.7.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "apexcharts": "^5.3.6",
+    "axios": "^1.13.2",
+    "clsx": "^2.1.1",
+    "flowbite": "^4.0.1",
+    "flowbite-react": "^0.12.16",
+    "moment": "^2.30.1",
+    "react": "^19.2.0",
+    "react-apexcharts": "^1.9.0",
+    "react-dom": "^19.2.0",
+    "react-icons": "^5.5.0",
+    "react-redux": "^9.2.0",
+    "react-router": "^7.12.0",
+    "react-router-dom": "^7.12.0",
+    "react-slick": "^0.31.0",
+    "react-toastify": "^11.0.5",
+    "slick-carousel": "^1.8.1",
+    "tailwindcss": "^4.1.18"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.1",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.5",
+    "@types/react-dom": "^19.2.3",
+    "@types/react-slick": "^0.23.13",
+    "@vitejs/plugin-react": "^5.1.1",
+    "babel-plugin-react-compiler": "^1.0.0",
+    "eslint": "^9.39.1",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "globals": "^16.5.0",
+    "tailwind-scrollbar": "^4.0.2",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.46.4",
+    "vite": "^7.2.4"
+  }
+}

@@ -1,0 +1,32 @@
+.navigation-container {
+  transition:
+    translate 1s ease-in-out,
+    width 1s ease-in-out;
+  /* Hide overflowing content during transition */
+}
+
+/* Initially hide nav-item-name */
+.nav-item-name {
+  opacity: 0;
+
+  transition: opacity 0.6s ease-in-out; /* Add opacity transition */
+}
+
+.nav-link:hover .nav-item-name {
+  opacity: 1;
+}
+
+.search-input {
+  display: none;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out; /* Add opacity transition */
+}
+
+.navigation-container:hover .search-input {
+  display: block;
+  opacity: 1;
+}
+
+.navigation-container:hover .search-icon {
+  display: none;
+}

@@ -1,0 +1,80 @@
+@import "tailwindcss";
+@import "flowbite-react/plugin/tailwindcss";
+@source "../.flowbite-react/class-list.json";
+@plugin 'tailwind-scrollbar' {
+  nocompatible: true;
+  preferredstrategy: "pseudoelements";
+}
+
+body {
+  background: #0f0f10;
+  color: #fff;
+}
+
+input,
+select,
+textarea {
+  background-color: #000;
+
+  &:focus {
+    border-color: rgb(211, 140, 152);
+    outline: none;
+  }
+}
+
+select.custom-,
+div.cus-scr {
+  &::-webkit-scrollbar {
+    width: 20px;
+  }
+  &::-webkit-scrollbar-track {
+    background: rgb(94, 94, 94);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 6px;
+    height: 100px;
+  }
+}
+
+/* Toolbar container */
+.apexcharts-toolbar {
+  background-color: #111827; /* bg */
+  border-radius: 6px;
+  padding: 4px;
+}
+
+/* Toolbar icons */
+.apexcharts-toolbar svg {
+  fill: #e5e7eb !important;
+}
+
+/* Hover effect */
+.apexcharts-toolbar svg:hover {
+  fill: #60a5fa !important;
+}
+
+/* Menu dropdown */
+.apexcharts-menu {
+  background-color: #1f2937 !important;
+  border: 1px solid #374151;
+}
+
+/* Menu items */
+.apexcharts-menu-item {
+  color: #e5e7eb !important;
+}
+
+/* Hover menu item */
+.apexcharts-menu-item:hover {
+  background-color: #374151 !important;
+}
+
+.apexcharts-canvas {
+  overflow: visible !important;
+}
+
+.Toastify__toast {
+  background-color: #252d52 !important; /* slate-950 */
+  color: white !important;
+}
