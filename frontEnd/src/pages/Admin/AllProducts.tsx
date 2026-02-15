@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useAllProductsQuery } from "../../redux/features/product/productApiSlice";
+import { useGetProductsQuery } from "../../redux/features/product/productApiSlice";
 import moment from "moment";
 import { AdminMenu } from "./AdminMenu";
 import { APP_NAME } from "../../config/constants";
@@ -8,7 +8,12 @@ import { Message } from "../../components/Message";
 import { handleCatchError } from "../../Utils/handleCatchError";
 
 const AllProducts = () => {
-  const { data: products, isLoading, isError, error } = useAllProductsQuery();
+  const {
+    data: productsResponse,
+    isLoading,
+    isError,
+    error,
+  } = useGetProductsQuery({ keyword: "" });
 
   if (isLoading) {
     return (
@@ -42,10 +47,10 @@ const AllProducts = () => {
         <div className="flex flex-col md:flex-row">
           <div className="p-3 max-[1280px]:ml-16.5">
             <div className="ml-8 text-xl font-bold h-12">
-              All Products {products?.length}
+              All Products {productsResponse?.products?.length}
             </div>
             <div className="grid grid-cols-1 min-[1300px]:grid-cols-2 gap-y-2 gap-x-8">
-              {products?.map((product) => (
+              {productsResponse?.products?.map((product) => (
                 <div
                   key={product._id}
                   className="mb-4 p-2 rounded-md hover:bg-gray-700"
