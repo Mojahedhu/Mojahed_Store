@@ -22,9 +22,8 @@ const handlePayPalWebhook = asyncHandler(
     const body = req.body.toString("utf-8");
     const event = JSON.parse(body);
     console.log("Paypal webhook server running");
-    console.log("capture Data", event);
-    console.log("capture Data", event.resource);
-    console.log("capture Data", event.resource?.purchase_units[0]);
+    console.log("EVENT TYPE:", event.event_type);
+
     // 🔐 Verify PayPal signature
     const { data } = await axios.post(
       `${PAYPAL_API}/v1/notifications/verify-webhook-signature`,
