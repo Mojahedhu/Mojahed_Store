@@ -57,10 +57,18 @@ const AdminProductUpdate = () => {
     formData.append("image", file);
     console.log(`?${sp}`);
     try {
-      const res = await uploadProductImage({
-        formData,
-        query: `?${sp}`,
-      }).unwrap();
+      let res;
+      if (sp.get("image_Id")) {
+        res = await uploadProductImage({
+          formData,
+          query: `?${sp}`,
+        }).unwrap();
+      } else {
+        res = await uploadProductImage({
+          formData,
+        }).unwrap();
+      }
+
       toast.success(res.message, {
         position: "top-right",
         autoClose: 2000,
