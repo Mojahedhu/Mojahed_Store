@@ -13,7 +13,7 @@ const AllProducts = () => {
     isLoading,
     isError,
     error,
-  } = useGetProductsQuery({ keyword: "" });
+  } = useGetProductsQuery({});
 
   if (isLoading) {
     return (
