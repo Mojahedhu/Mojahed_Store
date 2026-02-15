@@ -253,7 +253,7 @@ const capturePaypalOrder = asyncHandler(async (req, res) => {
   // 🔥 VERIFY WITH PAYPAL
   const verified = await verifyPayPalOrder(
     paypalOrderId,
-    order.totalPrice.toString(),
+    order.totalPrice.toFixed(2),
   );
   order.isPaid = true;
   order.paidAt = new Date();
