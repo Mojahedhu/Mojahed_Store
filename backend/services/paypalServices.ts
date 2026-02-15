@@ -111,6 +111,7 @@ export const verifyPayPalOrder = async (
     };
   } catch (error) {
     console.log("PAYPAL CAPTURE ERROR:");
+    console.log(error);
     const err = error as {
       response: {
         status: number;
