@@ -87,6 +87,9 @@ export const verifyPayPalOrder = async (
     console.log("ORDER STATUS:", captureData.status);
     console.log("CAPTURE STATUS:", capture?.status);
 
+    console.log("Amount", capture.amount);
+    console.log("Capture Data", captureData);
+
     if (!capture) {
       throw new AppError("PayPal capture failed ", 400);
     }
