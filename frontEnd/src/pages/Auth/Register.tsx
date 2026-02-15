@@ -61,7 +61,7 @@ const Register = () => {
         password: password.toString(),
       }).unwrap();
       dispatch(setCredentials({ ...res }));
-      toast.success("Congratulations!🎉, you've registered successfully");
+      toast.success("Congratulations! you've registered successfully 🎉");
       navigate(redirect, { replace: true });
     } catch (err) {
       toast.error(handleCatchError(err, "Error while registering"));

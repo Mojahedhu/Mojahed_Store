@@ -41,7 +41,7 @@ const AdminProductUpdate = () => {
   const [uploadProductImage] = useUploadProductImageMutation();
 
   // Define the update product mutation
-  const [updateProduct, { isLoading }] = useUpdateProductMutation();
+  const [updateProduct, { isLoading, error }] = useUpdateProductMutation();
 
   // Define the delete product mutation
   const [deleteProduct, { isLoading: isLoadingDelete }] =
@@ -105,10 +105,10 @@ const AdminProductUpdate = () => {
       }
 
       // Update Product using the RTK Query mutation
-      const { data, error } = await updateProduct({
+      const data = await updateProduct({
         productId: _id!,
         formData,
-      });
+      }).unwrap();
       if (error) {
         console.log("Update product error", error);
         toast.error(

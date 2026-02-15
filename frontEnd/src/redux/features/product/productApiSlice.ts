@@ -136,6 +136,7 @@ const productApiSlice = apiSlice.injectEndpoints({
             formData.get("image") instanceof File
               ? URL.createObjectURL(formData.get("image") as File)
               : (formData.get("image") as string),
+          image_Id: formData.get("image_Id") as string,
           category: formData.get("category") as string,
           brand: formData.get("brand") as string,
           countInStock: Number(formData.get("countInStock")),
