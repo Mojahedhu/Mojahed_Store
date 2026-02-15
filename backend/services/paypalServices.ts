@@ -102,7 +102,7 @@ export const verifyPayPalOrder = async (
     if (capture.amount.value !== expectedAmount) {
       throw new AppError("Amount mismatch", 400);
     }
-
+    console.log(capture.amount, expectedAmount);
     return {
       id: capture.id,
       status: capture.status,
@@ -111,6 +111,7 @@ export const verifyPayPalOrder = async (
     };
   } catch (error) {
     console.log("PAYPAL CAPTURE ERROR:");
+
     console.log(error);
     const err = error as {
       response: {
