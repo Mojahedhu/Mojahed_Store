@@ -57,6 +57,10 @@ const handlePayPalWebhook = asyncHandler(
     const unit = event.resource?.purchase_units[0];
     const orderId = unit?.custom_id;
 
+    console.log("capture Data", event);
+    console.log("capture Data", event.resource);
+    console.log("capture Data", event.resource?.purchase_units[0]);
+
     if (!orderId || !unit?.amount) {
       throw new AppError("Invalid Paypal webhook payload", 400);
     }
