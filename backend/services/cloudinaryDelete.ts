@@ -7,7 +7,7 @@ export const deleteFromCloudinary = async (
   next: NextFunction,
 ) => {
   console.log("image_Id", imageId);
-  if (!imageId) {
+  if (imageId === undefined) {
     throw new AppError("Image id is required", 400);
   }
   const result = await cloudinary.uploader.destroy(imageId);

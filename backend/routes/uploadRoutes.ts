@@ -70,7 +70,7 @@ uploadRoutes.post(
     }
     const image_Id =
       typeof req.query.image_Id === "string" ? req.query.image_Id : undefined;
-    if (image_Id) {
+    if (image_Id !== undefined) {
       await deleteFromCloudinary(image_Id, next);
     }
     const file = req.file;
