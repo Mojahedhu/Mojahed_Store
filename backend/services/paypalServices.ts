@@ -98,11 +98,11 @@ export const verifyPayPalOrder = async (
     if (capture?.status !== "COMPLETED") {
       throw new AppError("PayPal Payment not completed", 400);
     }
-
+    console.log(capture.amount, expectedAmount);
     if (capture.amount.value !== expectedAmount) {
       throw new AppError("Amount mismatch", 400);
     }
-    console.log(capture.amount, expectedAmount);
+
     return {
       id: capture.id,
       status: capture.status,
@@ -126,8 +126,8 @@ export const verifyPayPalOrder = async (
     console.log(err.response?.data); // 🔥 THIS IS WHAT WE NEED
     console.log(err.response?.status);
     throw new AppError(
-      err.response?.data.message || "PayPal capture failed",
-      err.response?.status || 500,
+      err.response?.data.message || String(err) || "PayPal capture failed",
+      err.response?.status || 400,
     );
   }
 };
