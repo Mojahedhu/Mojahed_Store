@@ -11,7 +11,7 @@ import { useAppSelector } from "../redux/app/hooks";
 import { PayPalButtons } from "@paypal/react-paypal-js";
 import { toast } from "react-toastify";
 import { handleCatchError } from "../Utils/handleCatchError";
-import type { OnApproveData } from "@paypal/paypal-js";
+// import type { OnApproveData } from "@paypal/paypal-js";
 import { Loader } from "./Loader";
 import { Message } from "./Message";
 import clsx from "clsx";
@@ -29,8 +29,7 @@ const Order = () => {
   const [deleteOrder] = useDeleteOrderMutation();
   const [changePaymentMethod] = useChangePaymentMethodMutation();
   const [createPayPalOrder] = useCreatePaypalOrderMutation();
-  const [capturePaypalOrder, { isLoading: loadingPay }] =
-    useCapturePaypalOrderMutation();
+  const [, { isLoading: loadingPay }] = useCapturePaypalOrderMutation();
 
   const [deliverOrder, { isLoading: loadingDeliver }] =
     useDeliverOrderMutation();
