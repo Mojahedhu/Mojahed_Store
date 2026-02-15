@@ -68,9 +68,8 @@ uploadRoutes.post(
     if (!req.file) {
       throw new AppError("No file uploaded", 400);
     }
-    if (req.query.image_Id) {
-      const { image_Id } = req.query as { image_Id: string };
-
+    const { image_Id } = req.query as { image_Id: string };
+    if (image_Id) {
       await deleteFromCloudinary(image_Id, next);
     }
     const file = req.file;
