@@ -125,60 +125,10 @@ const productApiSlice = apiSlice.injectEndpoints({
         method: "PUT",
         body: formData,
       }),
-      async onQueryStarted(
-        { productId, formData },
-        { dispatch, queryFulfilled },
-      ) {
-        const updatedFields: Partial<Product> = {
-          name: formData.get("name") as string,
-          price: Number(formData.get("price")),
-          image:
-            formData.get("image") instanceof File
-              ? URL.createObjectURL(formData.get("image") as File)
-              : (formData.get("image") as string),
-          image_Id: formData.get("image_Id") as string,
-          category: formData.get("category") as string,
-          brand: formData.get("brand") as string,
-          countInStock: Number(formData.get("countInStock")),
-          description: formData.get("description") as string,
-          quantity: Number(formData.get("quantity")),
-        };
-
-        // Optimistic update cache
-        const patchResult = dispatch(
-          productApiSlice.util.updateQueryData(
-            "allProducts",
-            undefined,
-            (draft) => {
-              const product = draft.find((p) => p._id === productId);
-              if (product) {
-                Object.assign(product, updatedFields);
-              }
-            },
-          ),
-        );
-
-        try {
-          const { data } = await queryFulfilled;
-
-          //Sync cache with real server response
-          dispatch(
-            productApiSlice.util.updateQueryData(
-              "allProducts",
-              undefined,
-              (draft) => {
-                const product = draft.find((p) => p._id === productId);
-                if (product) {
-                  Object.assign(product, data);
-                }
-              },
-            ),
-          );
-        } catch {
-          // Rollback on error
-          patchResult.undo();
-        }
-      },
+      invalidatesTags: (_result, _error, { productId }) => [
+        { type: "Product", id: productId },
+        { type: "Product", id: "LIST" },
+      ],
     }),
     uploadProductImage: builder.mutation<
       uploadType,
