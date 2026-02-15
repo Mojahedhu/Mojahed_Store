@@ -218,7 +218,11 @@ const Shop = () => {
                 {filterProduct?.length} Products
               </h2>
               <div className="flex flex-wrap max-md:justify-center">
-                {isLoading && <Loader />}
+                {isLoading && (
+                  <div className="mx-auto my-5">
+                    <Loader />
+                  </div>
+                )}
                 {products?.length === 0 ? (
                   <div className="flex flex-col items-center space-y-2 mx-auto">
                     <h4>No products found for the selected filters.</h4>
