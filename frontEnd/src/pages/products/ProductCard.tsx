@@ -47,7 +47,9 @@ const ProductCard = ({ product }: { product: Product }) => {
       </section>
       <div className="p-5">
         <div className="flex justify-between">
-          <h5 className="mb-2 text-xl text-white w-55">{product.name}</h5>
+          <h5 className="mb-2 text-xl text-white w-55">
+            {product.name.slice(0, 25) + "..."}
+          </h5>
           <p className="text-white font-semibold bg-pink-500 rounded px-2 py-1 text-center h-fit">
             {product.price.toLocaleString("en-US", {
               style: "currency",
