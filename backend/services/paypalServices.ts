@@ -89,7 +89,7 @@ export const verifyPayPalOrder = async (
 
     console.log("Amount", capture.amount);
     console.log("Capture Data", captureData);
-    console.log("Capture ", capture);
+    console.log("Capture Data", capture);
 
     if (!capture) {
       throw new AppError("PayPal capture failed ", 400);
@@ -123,6 +123,9 @@ export const verifyPayPalOrder = async (
     };
     console.log(err.response?.data); // 🔥 THIS IS WHAT WE NEED
     console.log(err.response?.status);
-    throw new AppError(err.response?.data.message, err.response?.status);
+    throw new AppError(
+      err.response?.data.message || "PayPal capture failed",
+      err.response?.status || 500,
+    );
   }
 };
