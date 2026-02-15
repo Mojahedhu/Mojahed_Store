@@ -218,7 +218,7 @@ const createPaypalOrder = asyncHandler(async (req, res) => {
           custom_id: order._id?.toString(),
           amount: {
             currency_code: "USD",
-            value: order.totalPrice.toString(),
+            value: order.totalPrice.toFixed(2),
           },
         },
       ],

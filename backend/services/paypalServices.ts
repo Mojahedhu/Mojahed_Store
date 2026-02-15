@@ -59,13 +59,13 @@ export const verifyPayPalOrder = async (
   console.log("*".repeat(20));
   console.log("CAPTURING PAYPAL ORDER:", paypalOrderId);
 
-  const { data } = await axios.get(
+  const { data }: { data: CaptureResponse } = await axios.get(
     `${PAYPAL_API}/v2/checkout/orders/${paypalOrderId}`,
     { headers: { Authorization: `Bearer ${accessToken}` } },
   );
 
   console.log("ORDER STATUS:", data.status);
-  console.log("INTENT:", data.intent);
+  console.log("INTENT:", data.purchase_units[0].payments.captures[0].status);
 
   try {
     // 🔥 CAPTURE ORDER DIRECTLY

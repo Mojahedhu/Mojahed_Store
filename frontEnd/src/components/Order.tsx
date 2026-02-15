@@ -65,20 +65,9 @@ const Order = () => {
     return res.id; // Paypal order id
   };
 
-  const onApprove = async (data: OnApproveData): Promise<void> => {
+  const onApprove = async (): Promise<void> => {
     if (!order?._id) return;
-    try {
-      await capturePaypalOrder({
-        orderId: order._id,
-        paypalOrderId: data.orderID,
-      }).unwrap();
-      toast.success("Order paid successfully 🎉");
-    } catch (error) {
-      console.log(error);
-      toast.error(
-        handleCatchError(error, "PayPal payment verification failed"),
-      );
-    }
+    toast.info("Payment processing please wait... ⌛");
   };
 
   const onError = (err: unknown) => {
