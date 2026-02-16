@@ -72,13 +72,19 @@ const Order = () => {
   };
 
   const pollPaymentStatus = async () => {
+    // create one toast load
+    const toastId = toast.loading("Payment processing please wait... ⌛");
     const interval = setInterval(async () => {
-      toast.loading("Payment processing please wait... ⌛");
       const { data } = await refetch();
 
       if (data?.isPaid) {
         clearInterval(interval);
-        toast.success("Order paid successfully 🎉");
+        toast.update(toastId, {
+          render: "Order paid successfully 🎉",
+          type: "success",
+          isLoading: false,
+          autoClose: 5000,
+        });
       }
     }, 20000);
   };
