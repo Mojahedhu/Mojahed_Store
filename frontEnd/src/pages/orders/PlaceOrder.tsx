@@ -125,7 +125,7 @@ const PlaceOrder = () => {
           </div>
           <button
             type="button"
-            className="bg-pink-500 text-white px-4 py-2 rounded-full w-full mt-4 "
+            className="bg-pink-500 text-white px-4 py-2 rounded-full w-full mt-4 cursor-pointer"
             disabled={cart.cartItems.length === 0}
             onClick={placeOrderHandler}
           >

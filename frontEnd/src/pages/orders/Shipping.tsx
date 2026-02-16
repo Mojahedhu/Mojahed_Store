@@ -172,7 +172,7 @@ const Shipping = () => {
           </div>
           <button
             type="submit"
-            className="bg-pink-500 text-white px-4 py-2 rounded-full text-lg w-full hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500/50"
+            className="bg-pink-500 text-white px-4 py-2 rounded-full text-lg w-full hover:bg-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-500/50 cursor-pointer"
           >
             {isPending ? (
               <div className="mx-auto place-items-center">

@@ -93,7 +93,7 @@ const Cart = () => {
                     .toFixed(2)}
                 </div>
                 <button
-                  className="bg-pink-500 mt-4 px-4 py-2 rounded-full text-lg w-full"
+                  className="bg-pink-500 mt-4 px-4 py-2 rounded-full text-lg w-full cursor-pointer"
                   disabled={cartItems.length === 0}
                   onClick={checkoutHandler}
                 >
