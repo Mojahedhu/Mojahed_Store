@@ -10,6 +10,7 @@ import { AppError } from "../utils/AppError.js";
 import {
   getAccessToken,
   verifyPayPalOrder,
+  type CaptureResponse,
 } from "../services/paypalServices.js";
 import axios from "axios";
 import { stripe } from "../utils/stripe.js";
@@ -235,31 +236,50 @@ const createPaypalOrder = asyncHandler(async (req, res) => {
 
 const capturePaypalOrder = asyncHandler(async (req, res) => {
   const { paypalOrderId } = req.body as { paypalOrderId: string };
-  const { id } = req.params as { id: string };
+  // const { id } = req.params as { id: string };
 
-  const order = await Order.findById(id);
+  // const order = await Order.findById(id);
 
-  if (!order) {
-    throw new AppError("Order not found", 404);
-  }
-  if (order.isPaid) {
-    throw new AppError("Order already paid", 400);
-  }
+  // if (!order) {
+  //   throw new AppError("Order not found", 404);
+  // }
+  // if (order.isPaid) {
+  //   throw new AppError("Order already paid", 400);
+  // }
 
-  if (req.user?._id.toString() !== order.user.toString()) {
-    throw new AppError("User not authorized", 401);
-  }
+  // if (req.user?._id.toString() !== order.user.toString()) {
+  //   throw new AppError("User not authorized", 401);
+  // }
 
-  // 🔥 VERIFY WITH PAYPAL
-  const verified = await verifyPayPalOrder(
-    paypalOrderId,
-    order.totalPrice.toFixed(2),
+  // // 🔥 VERIFY WITH PAYPAL
+  // const verified = await verifyPayPalOrder(
+  //   paypalOrderId,
+  //   order.totalPrice.toFixed(2),
+  // );
+  // order.isPaid = true;
+  // order.paidAt = new Date();
+  // order.paymentResult = verified;
+  // const updatedOrder = await order.save();
+  // res.json(updatedOrder);
+
+  const accessToken = await getAccessToken();
+
+  // 🔥 CAPTURE ORDER DIRECTLY
+  const {
+    data: captureData,
+  }: {
+    data: CaptureResponse;
+  } = await axios.post(
+    `${PAYPAL_API}/v2/checkout/orders/${paypalOrderId}/capture`,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    },
   );
-  order.isPaid = true;
-  order.paidAt = new Date();
-  order.paymentResult = verified;
-  const updatedOrder = await order.save();
-  res.json(updatedOrder);
+
+  res.json(captureData);
 });
 
 const createPaymentIntent = asyncHandler(async (req, res) => {

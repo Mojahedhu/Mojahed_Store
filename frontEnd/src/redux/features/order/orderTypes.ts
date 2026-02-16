@@ -47,3 +47,32 @@ export type SalesByDate = {
   _id: string;
   totalSales: string;
 };
+
+export type CapturedResponse = {
+  id: string;
+  status: string;
+  update_time: string;
+  email_address: string;
+  purchase_units: {
+    amount_value: string;
+    payments: {
+      captures: {
+        id: string;
+        status: string;
+        update_time: string;
+        amount: {
+          value: string;
+          currency_code: string;
+        };
+        links: {
+          href: string;
+          rel: string;
+          method: string;
+        }[];
+      }[];
+    };
+  }[];
+  payer: {
+    email_address: string;
+  };
+};

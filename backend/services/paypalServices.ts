@@ -1,7 +1,7 @@
 import axios from "axios";
 import { AppError } from "../utils/AppError.js";
 
-type CaptureResponse = {
+export type CaptureResponse = {
   id: string;
   status: string;
   update_time: string;

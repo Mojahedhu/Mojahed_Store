@@ -8,6 +8,51 @@ import mongoose from "mongoose";
 
 const PAYPAL_API = "https://api-m.sandbox.paypal.com";
 
+type PaypalWebhookResponse = {
+  id: string;
+  event_version: string;
+  create_time: string;
+  event_type: string;
+  summary: string;
+  resource: {
+    id: string;
+    create_time: string;
+    status: string;
+    intent: string;
+    payer: {
+      name: {
+        given_name: string;
+        surname: string;
+      };
+      email_address: string;
+    };
+    purchase_units: [
+      {
+        amount: {
+          value: string;
+          currency_code: string;
+        };
+        paymee: {
+          email_address: string;
+          merchant_id: string;
+          shipping: {
+            name: {
+              full_name: string;
+            };
+            address: {
+              address_line_1: string;
+              admin_area_2: string;
+              admin_area_1: string;
+              postal_code: string;
+              country_code: string;
+            };
+          };
+        };
+      },
+    ];
+  };
+};
+
 const handlePayPalWebhook = asyncHandler(
   async (req: Request, res: Response) => {
     const transmissionId = req.headers["paypal-transmission-id"] as string;

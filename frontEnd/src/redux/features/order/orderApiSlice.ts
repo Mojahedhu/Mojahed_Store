@@ -1,6 +1,11 @@
 import { API_ENDPOINTS } from "../../constants/endpoints";
 import { apiSlice } from "../../services/api";
-import type { CreateOrderDTO, OrderDTO, SalesByDate } from "./orderTypes";
+import type {
+  CapturedResponse,
+  CreateOrderDTO,
+  OrderDTO,
+  SalesByDate,
+} from "./orderTypes";
 import type { OnApproveActions } from "@paypal/paypal-js";
 
 type OnApproveOrderDetails = Awaited<
@@ -81,7 +86,7 @@ const orderApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     capturePaypalOrder: builder.mutation<
-      OrderDTO,
+      CapturedResponse,
       { orderId: string; paypalOrderId: string }
     >({
       query: ({ orderId, paypalOrderId }) => ({
