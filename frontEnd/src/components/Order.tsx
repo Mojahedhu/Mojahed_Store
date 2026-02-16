@@ -24,7 +24,12 @@ const Order = () => {
   const navigate = useNavigate();
   const { confirm, ConfirmDialog } = useConfirm();
 
-  const { data: order, isLoading, error } = useGetOrderDetailsQuery(orderId!);
+  const {
+    data: order,
+    isLoading,
+    error,
+    refetch,
+  } = useGetOrderDetailsQuery(orderId!);
   console.log(order?.paymentMethod);
   const [deleteOrder] = useDeleteOrderMutation();
   const [changePaymentMethod] = useChangePaymentMethodMutation();
@@ -66,13 +71,30 @@ const Order = () => {
     return res.id; // Paypal order id
   };
 
+  const pollPaymentStatus = async () => {
+    const interval = setInterval(async () => {
+      toast.loading("Payment processing please wait... ⌛");
+      const { data } = await refetch();
+
+      if (data?.isPaid) {
+        clearInterval(interval);
+        toast.success("Order paid successfully 🎉");
+      }
+    }, 2000);
+  };
   const onApprove = async (data: OnApproveData): Promise<void> => {
     if (!order?._id) return;
-    await capturePayPalOrder({
-      orderId: orderId!,
-      paypalOrderId: data.orderID,
-    }).unwrap();
-    toast.success("Payment successful 🎉");
+    try {
+      await capturePayPalOrder({
+        orderId: orderId!,
+        paypalOrderId: data.orderID,
+      }).unwrap();
+      pollPaymentStatus();
+    } catch (error) {
+      toast.error(
+        handleCatchError(error, String(error) || "Error capturing payment"),
+      );
+    }
   };
 
   const onError = (err: unknown) => {
