@@ -34,7 +34,7 @@ A production-style full-stack e-commerce project built to practice real-world ar
 
 This project was built to simulate a **real production e-commerce system**, focusing on reliability, security, and maintainability rather than just UI features.
 
-## 🏠 [Live demo:](https://mojahed-store.onrender.com/)
+## 🏠 [Live demo](https://mojahed-store.onrender.com/)
 
 ## 🏠 [The Original Project](https://www.youtube.com/watch?v=PRpTY5LS95M&list=PLSDeUiTMfxW5ymcWAXlbnJ3KLoN34Li_C"Youtub")
 
