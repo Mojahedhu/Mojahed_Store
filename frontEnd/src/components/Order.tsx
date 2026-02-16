@@ -80,7 +80,7 @@ const Order = () => {
         clearInterval(interval);
         toast.success("Order paid successfully 🎉");
       }
-    }, 5000);
+    }, 20000);
   };
   const onApprove = async (data: OnApproveData): Promise<void> => {
     if (!order?._id) return;
