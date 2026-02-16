@@ -130,11 +130,10 @@ const handlePayPalWebhook = asyncHandler(
     console.log("*".repeat(20));
     console.log("Paypal webhook server running");
     console.log("EVENT TYPE:", event.event_type);
-    console.log("Event log", event);
     console.log("-".repeat(20));
     console.log("Event resource log", event.resource);
     console.log("-".repeat(20));
-    console.log("Event resource purchase units log", event.resource);
+
     // 🔐 Verify PayPal signature
     const { data } = await axios.post(
       `${PAYPAL_API}/v1/notifications/verify-webhook-signature`,
@@ -157,23 +156,23 @@ const handlePayPalWebhook = asyncHandler(
     if (data.verification_status !== "SUCCESS") {
       throw new AppError("PayPal webhook verification failed", 400);
     }
-
+    console.log("pass data verification status");
     // Ignore unrelated events
     if (event.event_type !== "PAYMENT.CAPTURE.COMPLETED") {
       return res.sendStatus(200);
     }
-
+    console.log("pass event type test");
     if (!data.verification_status) {
       throw new AppError("Invalid PayPal signature", 400);
     }
-
+    console.log("pass data verification status");
     const unit = event.resource;
     const orderId = unit?.custom_id;
 
     if (!orderId || !unit?.amount.value) {
       throw new AppError("Invalid Paypal webhook payload", 400);
     }
-
+    console.log("pass order id test");
     const session = await mongoose.startSession();
     session.startTransaction();
 
@@ -183,7 +182,7 @@ const handlePayPalWebhook = asyncHandler(
       if (!order) {
         throw new AppError("Order not found", 404);
       }
-
+      console.log("pass order not found test");
       // 🔐 Idempotency protection
       if (order.isPaid) {
         return res.sendStatus(200);
@@ -199,7 +198,7 @@ const handlePayPalWebhook = asyncHandler(
       ) {
         throw new AppError("Payment amount mismatch", 400);
       }
-
+      console.log("pass payment amount mismatch test");
       order.isPaid = true;
       order.paidAt = new Date();
 
