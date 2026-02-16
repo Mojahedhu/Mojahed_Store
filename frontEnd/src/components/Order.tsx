@@ -61,12 +61,14 @@ const Order = () => {
 
   const createOrder = async () => {
     const res = await createPayPalOrder(orderId!).unwrap();
+    toast.info("Payment processing please wait... ⌛");
     return res.id; // Paypal order id
   };
 
   const onApprove = async (): Promise<void> => {
     if (!order?._id) return;
-    toast.info("Payment processing please wait... ⌛");
+
+    toast.success("Payment successful 🎉");
   };
 
   const onError = (err: unknown) => {

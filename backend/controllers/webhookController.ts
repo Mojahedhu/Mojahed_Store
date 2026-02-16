@@ -21,9 +21,17 @@ const handlePayPalWebhook = asyncHandler(
 
     const body = req.body.toString("utf-8");
     const event = JSON.parse(body);
+    console.log("*".repeat(20));
     console.log("Paypal webhook server running");
     console.log("EVENT TYPE:", event.event_type);
-
+    console.log("Event log", event);
+    console.log("-".repeat(20));
+    console.log("Event resource log", event.resource);
+    console.log("-".repeat(20));
+    console.log(
+      "Event resource purchase units log",
+      event.resource.purchase_units[0],
+    );
     // 🔐 Verify PayPal signature
     const { data } = await axios.post(
       `${PAYPAL_API}/v1/notifications/verify-webhook-signature`,
@@ -78,9 +86,12 @@ const handlePayPalWebhook = asyncHandler(
         return res.sendStatus(200);
       }
 
+      const capture = event.resource; // Full capture resource
+
       // 🔐 Amount verification
       if (
-        unit.amount.value !== order?.totalPrice.toString() ||
+        Number.parseFloat(unit.amount.value) !==
+          Number.parseFloat(order?.totalPrice.toFixed(2)) ||
         unit.amount.currency_code !== "USD"
       ) {
         throw new AppError("Payment amount mismatch", 400);
@@ -88,6 +99,13 @@ const handlePayPalWebhook = asyncHandler(
 
       order.isPaid = true;
       order.paidAt = new Date();
+
+      order.paymentResult = {
+        id: capture.id,
+        status: capture.status,
+        update_time: capture.update_time,
+        email_address: capture.payer.email_address,
+      };
 
       await order.save({ session });
       await session.commitTransaction();
