@@ -80,7 +80,7 @@ const Order = () => {
         clearInterval(interval);
         toast.success("Order paid successfully 🎉");
       }
-    }, 2000);
+    }, 5000);
   };
   const onApprove = async (data: OnApproveData): Promise<void> => {
     if (!order?._id) return;
@@ -111,12 +111,14 @@ const Order = () => {
 
   if (error) {
     return (
-      <Message variant="error">
-        {handleCatchError(
-          error,
-          "Sorry, something went wrong on loading order details",
-        )}
-      </Message>
+      <div className="mx-[20%]">
+        <Message variant="error">
+          {handleCatchError(
+            error,
+            "Sorry, something went wrong on loading order details",
+          )}
+        </Message>
+      </div>
     );
   }
 
