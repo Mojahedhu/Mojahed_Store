@@ -109,10 +109,10 @@ const handlePayPalWebhook = asyncHandler(
       throw new AppError("Invalid PayPal signature", 400);
     }
 
-    const unit = event.resource?.purchase_units[0];
+    const unit = event.resource;
     const orderId = unit?.custom_id;
 
-    if (!orderId || !unit?.amount) {
+    if (!orderId || !unit?.amount.value) {
       throw new AppError("Invalid Paypal webhook payload", 400);
     }
 
