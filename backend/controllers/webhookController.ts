@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 
 const PAYPAL_API = "https://api-m.sandbox.paypal.com";
 
-type PaypalWebhookResponse = {
+type PaypalWebhookRes = {
   id: string;
   event_version: string;
   create_time: string;
@@ -53,6 +53,67 @@ type PaypalWebhookResponse = {
   };
 };
 
+type PaypalWebhookResponse = {
+  id: string;
+  event_version: string;
+  create_time: string;
+  resource_type: string;
+  event_type: string;
+  resource_version: string;
+  event_time: string;
+  summary: string;
+  resource: {
+    payee: {
+      email_address: string;
+      merchant_id: string;
+    };
+    amount: {
+      value: string;
+      currency_code: string;
+    };
+    seller_protection: {
+      status: string;
+      dispute_categories: string[];
+    };
+    supplementary_data: {
+      related_ids: {
+        order_id: string;
+      }[];
+    };
+    update_time: string;
+    create_time: string;
+    id: string;
+    final_capture: boolean;
+    status: string;
+    intent: string;
+    seller_receivable_breakdown: {
+      gross_amount: {
+        value: string;
+        currency_code: string;
+      };
+      paypal_fee: {
+        value: string;
+        currency_code: string;
+      };
+      net_amount: {
+        value: string;
+        currency_code: string;
+      };
+    };
+    custom_id: string;
+    links: {
+      href: string;
+      rel: string;
+      method: string;
+    }[];
+  };
+  links: {
+    href: string;
+    rel: string;
+    method: string;
+  }[];
+};
+
 const handlePayPalWebhook = asyncHandler(
   async (req: Request, res: Response) => {
     const transmissionId = req.headers["paypal-transmission-id"] as string;
@@ -65,7 +126,7 @@ const handlePayPalWebhook = asyncHandler(
     const webhookId = process.env.PAYPAL_WEBHOOK_ID!;
 
     const body = req.body.toString("utf-8");
-    const event = JSON.parse(body);
+    const event: PaypalWebhookResponse = JSON.parse(body);
     console.log("*".repeat(20));
     console.log("Paypal webhook server running");
     console.log("EVENT TYPE:", event.event_type);
@@ -73,10 +134,7 @@ const handlePayPalWebhook = asyncHandler(
     console.log("-".repeat(20));
     console.log("Event resource log", event.resource);
     console.log("-".repeat(20));
-    console.log(
-      "Event resource purchase units log",
-      event.resource.purchase_units[0],
-    );
+    console.log("Event resource purchase units log", event.resource);
     // 🔐 Verify PayPal signature
     const { data } = await axios.post(
       `${PAYPAL_API}/v1/notifications/verify-webhook-signature`,
@@ -149,7 +207,7 @@ const handlePayPalWebhook = asyncHandler(
         id: capture.id,
         status: capture.status,
         update_time: capture.update_time,
-        email_address: capture.payer.email_address,
+        email_address: capture.payee.email_address,
       };
 
       await order.save({ session });
