@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 // Load environment variables from .env file
 dotenv.config();
 const connectDB = async () => {
-
+console.log("MONGO_URI:", process.env.MONGO_URI);
     try {
         await mongoose.connect(process.env.MONGO_URI!)
         console.log("Successfully connected to DB 👍")
