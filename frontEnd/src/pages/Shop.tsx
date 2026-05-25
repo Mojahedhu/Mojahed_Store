@@ -106,7 +106,7 @@ const Shop = () => {
     <>
       <title>{APP_NAME + " - Shop"}</title>
       <div className="container mx-auto">
-        <div className="min-[1281px]:mx-[60px]!">
+        <div className="lg:mx-[60px]!">
           <div className="flex flex-col md:flex-row">
             {/* Mobile / Tablet filter toggle */}
             <div className="md:hidden mb-3">
