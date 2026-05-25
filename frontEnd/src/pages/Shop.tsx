@@ -127,9 +127,7 @@ const Shop = () => {
             {/* Filter wrapper */}
             <div className="flex max-md:justify-center">
               <div
-                className={`
-                          max-md:overflow-hidden
-                          transition-[max-height, width] duration-2000 ease-in-out`}
+                className={`max-md:overflow-hidden transition-[max-height, width] duration-2000 ease-in-out`}
                 style={{
                   ...style,
                 }}
