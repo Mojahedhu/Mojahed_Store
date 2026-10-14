@@ -89,9 +89,10 @@ Mojahed_Store/
 │       ├── hooks/              # useDebounce, useAutoHeight
 │       └── providers/          # StripeProvider wrapper
 │
+├── backup/                     # MongoDB Atlas database dump (BSON/JSON)
 ├── Dockerfile                  # Multi-stage build (frontend → backend → serve)
 ├── docker-compose.yml          # App + MongoDB services
-└── package.json                # Root scripts with concurrently
+└── package.json                # Root scripts with concurrently & db restore
 ```
 
 ---
@@ -211,6 +212,36 @@ npm run build
 
 # Start the production server
 npm start
+```
+
+---
+
+### 6. Database Backup & Restore
+
+A pre-configured database backup dump is included in the [`backup/`](./backup/) directory (dumped from MongoDB Atlas, containing initial products, categories, users, and orders).
+
+#### Restore to Local MongoDB
+
+To populate your local MongoDB instance with the backup data:
+
+```bash
+# Restore without dropping existing data
+npm run db:restore
+
+# OR drop existing collections first and restore clean data
+npm run db:restore:drop
+```
+
+Alternatively, you can use the MongoDB command-line tool directly:
+
+```bash
+mongorestore --db=mojahed_store backup/mojahed-store
+```
+
+#### Restore to MongoDB Atlas Cloud
+
+```bash
+mongorestore --uri="mongodb+srv://<username>:<password>@cluster0.xxxx.mongodb.net/mojahed_store" backup/mojahed-store
 ```
 
 ---
