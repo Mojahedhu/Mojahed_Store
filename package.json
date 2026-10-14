@@ -14,7 +14,9 @@
     "frontend:build": "npm run build --prefix frontend",
     
     "dev": "concurrently \"npm run backend:dev\" \"npm run frontend:dev\"",
-    "build": "npm run backend:build && npm run frontend:build"
+    "build": "npm run backend:build && npm run frontend:build",
+    "db:restore": "mongorestore --db=mojahed_store backup/mojahed-store",
+    "db:restore:drop": "mongorestore --drop --db=mojahed_store backup/mojahed-store"
   },
   "keywords": [],
   "author": "",
